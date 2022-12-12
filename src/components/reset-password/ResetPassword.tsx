@@ -17,7 +17,7 @@ function ResetPassword(){
     const [confirmation, setConfirmation] = useState(false);
     const navigate: any = useNavigate(); //Dear typescript, stop it. Get some help.
 
-    const [secAnswer, setSecAnswer] = useState<any>('');
+    const [secQuestion, setSecQuestion] = useState<any>('');
 
     const navAfterTime = () => { 
         //@DOCS: used for the timeout, below, so our confirm message is displayed.
@@ -42,7 +42,8 @@ function ResetPassword(){
       //security question from the server ie.
       bankingClient.post('user/reset-password', submission)
         .then(res=>{
-          console.log(res);
+          console.log(res); //set security question into state, call below handleSubmit??
+          setSecQuestion(res.secQuestion); //TYPESCRIPT! I SWEAR TO GOD!!!!!!
         }).catch(err=>{
           console.log(err + '___->handle this error somehow!')
         })
