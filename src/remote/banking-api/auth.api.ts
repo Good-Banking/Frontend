@@ -22,13 +22,17 @@ export const apiRegister = async (
   email: string,
   password: string,
   firstName: string,
-  lastName: string
+  lastName: string,
+  securityQuestion: string,
+  securityAnswer: string
 ): Promise<bankingApiResponse> => {
   const response = await bankingClient.post<any>(`${baseURL}/register`, {
     email: email,
     password: password,
     firstName: firstName,
-    lastName: lastName
+    lastName: lastName,
+    securityQuestion: securityQuestion,
+    securityAnswer: securityAnswer
   });
   return { status: response.status, headers: response.headers, payload: response.data };
 };

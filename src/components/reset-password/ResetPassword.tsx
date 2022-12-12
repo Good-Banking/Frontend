@@ -42,8 +42,8 @@ function ResetPassword(){
       //security question from the server ie.
       bankingClient.post('user/reset-password', submission)
         .then(res=>{
-          console.log(res); //set security question into state, call below handleSubmit??
-          setSecQuestion(res.secQuestion); //TYPESCRIPT! I SWEAR TO GOD!!!!!!
+          console.log(res);
+          setSecQuestion(res.data.secQuestion);
         }).catch(err=>{
           console.log(err + '___->handle this error somehow!')
         })
