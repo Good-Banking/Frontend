@@ -7,11 +7,17 @@ import { SyntheticEvent, useState, } from 'react';
 import {useNavigate} from 'react-router-dom';
 
 function ResetPassword(){
-    const [submission, setSubmission] = useState<any>({email: '', password: ''});
+    const [submission, setSubmission] = useState<any>({
+      email: '', 
+      password: '', 
+      securityAnswer: '',
+    });
     const [newPassword, setNewPassword] = useState(''); //used for password CONFIRMATION
     const [error, setError] = useState(false);
     const [confirmation, setConfirmation] = useState(false);
     const navigate: any = useNavigate(); //Dear typescript, stop it. Get some help.
+
+    const [secAnswer, setSecAnswer] = useState<any>('');
 
     const navAfterTime = () => { 
         //@DOCS: used for the timeout, below, so our confirm message is displayed.
@@ -29,6 +35,17 @@ function ResetPassword(){
             setError(false);
             return false;
         }
+    }
+
+    const handleSecurityGet = () => {
+      //@DOCS: I SEND A POST REQUEST, but the function is called get because it "gets" the 
+      //security question from the server ie.
+      bankingClient.post('user/reset-password', submission)
+        .then(res=>{
+          console.log(res);
+        }).catch(err=>{
+          console.log(err + '___->handle this error somehow!')
+        })
     }
 
     const handleChange = (e: SyntheticEvent) => {
