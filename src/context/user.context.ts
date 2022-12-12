@@ -10,6 +10,8 @@ export interface User {
   state: string;
   userType: string;
   zip: number;
+  securityQuestion: string,
+  securityAnswer: string
 }
 
 interface UserContextState {

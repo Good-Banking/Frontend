@@ -117,6 +117,18 @@ function ResetPassword(){
             name="password"
             label="Confirm new password"
             type="password"
+            id="securityPassword"
+            autoComplete="current-password"
+            value={submission.securityAnswer}
+            onChange={handleNewPassChange}
+          />
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            name="securityAnswer"
+            label="Enter your security answer to verify that you are the account holder."
+            type="password"
             id="password"
             autoComplete="current-password"
             value={newPassword}
