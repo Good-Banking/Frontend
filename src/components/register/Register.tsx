@@ -105,7 +105,7 @@ export default function Register() {
             id="lastName"
             autoComplete="last Name"
           />
-          <h2>Security question (change me to a diff element)</h2>
+          <h2>Security question</h2>
           <p>Please pick a Good&#8482; security question.
             <br></br>
             A Good security question is one that only you know the answer to, and is not a yes or no question.
@@ -130,7 +130,8 @@ export default function Register() {
             id="securityAnswer"
             autoComplete="security answer"
           />
-
+          <p>Be sure to write down your answer in a Good&#8482; place, like a desk drawer or other private location.
+          </p>
           <Button
             type="submit"
             color="secondary"

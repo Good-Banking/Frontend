@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 
 import bankingClient from '../../remote/banking-api/bankingClient';
-import { SyntheticEvent, useState, } from 'react';
+import { SyntheticEvent, useState, useRef, useEffect, } from 'react';
 import {useNavigate} from 'react-router-dom';
 
 function ResetPassword(){
@@ -11,13 +11,15 @@ function ResetPassword(){
       email: '', 
       password: '', 
       securityAnswer: '',
-    });
+    }); //TODO: PASS _ME_ THRU PROPS TO SEC QUESTION MODAL
+        //THEN HANDLE SUBMITTING THERE.
     const [newPassword, setNewPassword] = useState(''); //used for password CONFIRMATION
     const [error, setError] = useState(false);
     const [confirmation, setConfirmation] = useState(false);
     const navigate: any = useNavigate(); //Dear typescript, stop it. Get some help.
 
     const [secQuestion, setSecQuestion] = useState<any>('');
+    const handleSecurityGet = useRef(()=>{});
 
     const navAfterTime = () => { 
         //@DOCS: used for the timeout, below, so our confirm message is displayed.
@@ -37,17 +39,7 @@ function ResetPassword(){
         }
     }
 
-    const handleSecurityGet = () => {
-      //@DOCS: I SEND A POST REQUEST, but the function is called get because it "gets" the 
-      //security question from the server ie.
-      bankingClient.post('user/reset-password', submission)
-        .then(res=>{
-          console.log(res);
-          setSecQuestion(res.data.secQuestion);
-        }).catch(err=>{
-          console.log(err + '___->handle this error somehow!')
-        })
-    }
+
 
     const handleChange = (e: SyntheticEvent) => {
       setSubmission({
