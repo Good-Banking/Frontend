@@ -44,15 +44,20 @@ export default function Accounts() {
   //if logged in and there is an account
   return (
     <>
-      <Stack spacing={2} sx={{alignItems: 'center'}}>
-        
-      <Typography sx={{fontSize: 22, color: '#5E548E'}}>
-        Accounts:
-      </Typography>
-        
-        {accounts?.map((account: Account) => (
-          <AccountListItem key={account.id} account={account} />
-        ))}
+      <Stack spacing={2} sx={{ alignItems: 'center' }}>
+        {(accounts.length > 0) ? (
+          <>
+            <Typography sx={{ fontSize: 22, color: '#5E548E' }}>
+              Accounts:
+            </Typography>
+
+            {accounts.map((account: Account) => (
+              <AccountListItem key={account.id} account={account} />
+            ))}
+          </>
+        ) : (
+          ''
+        )}
 
         <Button
           onClick={() => {
