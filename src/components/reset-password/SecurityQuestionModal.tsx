@@ -4,7 +4,12 @@ import {useNavigate} from 'react-router-dom';
 import { TextField, Button } from '@mui/material';
 
 function SecurityQuestion(props: any){
-    //const {email, password, securityAnswer} = props;
+    //const {email: email, password: password, securityAnswer: securityAnswer} = props;
+    // const [submission, setSubmission] = useState({
+    //   email: props.email,
+    //   password: props.password,
+    //   securityAnswer: props.securityAnswer
+    // })
     const [secQuestion, setSecQuestion] = useState<any>('');
     const [confirm, setConfirm] = useState(false);
     const handleSecurityGet = useRef(()=>{});
@@ -32,6 +37,7 @@ function SecurityQuestion(props: any){
       //pass user info (email, new password) BE SURE TO GET PROPS IN HERE!
       useEffect(()=>{
         handleSecurityGet.current();
+        console.log(props);
       }, [])
 
       const handleChange = (e: SyntheticEvent) => {
