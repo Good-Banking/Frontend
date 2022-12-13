@@ -118,7 +118,6 @@ export default function Register() {
             label="Security question"
             type="text"
             id="securityQuestion"
-            autoComplete="security question"
           />
             <TextField
             margin="normal"
@@ -128,7 +127,6 @@ export default function Register() {
             label="Security answer"
             type="text"
             id="securityAnswer"
-            autoComplete="security answer"
           />
           <p>Be sure to write down your answer in a Good&#8482; place, like a desk drawer or other private location.
           </p>

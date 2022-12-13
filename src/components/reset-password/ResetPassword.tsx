@@ -66,7 +66,6 @@ function ResetPassword(){
             id="email"
             label="Email Address"
             name="email"
-            autoComplete="email"
             autoFocus
             value={submission.email}
             onChange={handleChange}
@@ -91,18 +90,6 @@ function ResetPassword(){
             label="Confirm new password"
             type="password"
             id="securityPassword"
-            autoComplete="current-password"
-            value={submission.securityAnswer}
-            onChange={handleNewPassChange}
-          />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="securityAnswer"
-            label="Enter your security answer to verify that you are the account holder."
-            type="password"
-            id="password"
             autoComplete="current-password"
             value={newPassword}
             onChange={handleNewPassChange}
