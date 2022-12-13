@@ -1,30 +1,24 @@
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
+import { SyntheticEvent, useState, } from 'react';
+// import {useNavigate} from 'react-router-dom';
 
+import SecurityQuestionModal from './SecurityQuestionModal';
 import bankingClient from '../../remote/banking-api/bankingClient';
-import { SyntheticEvent, useState, useRef, useEffect, } from 'react';
-import {useNavigate} from 'react-router-dom';
+
 
 function ResetPassword(){
     const [submission, setSubmission] = useState<any>({
       email: '', 
       password: '', 
       securityAnswer: '',
-    }); //TODO: PASS _ME_ THRU PROPS TO SEC QUESTION MODAL
-        //THEN HANDLE SUBMITTING THERE.
+    });
     const [newPassword, setNewPassword] = useState(''); //used for password CONFIRMATION
     const [error, setError] = useState(false);
     const [confirmation, setConfirmation] = useState(false);
-    const navigate: any = useNavigate(); //Dear typescript, stop it. Get some help.
+    const [modal, setModal] = useState(false);
 
-    const [secQuestion, setSecQuestion] = useState<any>('');
-    const handleSecurityGet = useRef(()=>{});
-
-    const navAfterTime = () => { 
-        //@DOCS: used for the timeout, below, so our confirm message is displayed.
-        navigate('/login');
-    }
 
     const validate=(value: string, value2: string)=>{
         // ADD MIN LENGTH REQS HERE AND IN REGISTRATION
@@ -38,9 +32,6 @@ function ResetPassword(){
             return false;
         }
     }
-
-
-
     const handleChange = (e: SyntheticEvent) => {
       setSubmission({
         ...submission,
@@ -52,22 +43,12 @@ function ResetPassword(){
         //used for confirmation that passwords are the same!
         setNewPassword((e.target as HTMLInputElement).value);
     }
-    const handleSubmit = () => {
-        if(validate(submission.password, newPassword) === true){
-            return null;
-        } else {
-            bankingClient.patch('/user/reset-password', submission)
-            .then(res=>{
-                setConfirmation(true);
-                setTimeout(navAfterTime, 1500);
-            })
-            .catch(err=>{
-                setError(true);
-            })
-        }
-}
+
+    const handleSubmit = () => { setModal(true); }
+
     return (
     <div>
+      {modal ? <SecurityQuestionModal props={submission} /> : 
         <Box
         sx={{
           marginTop: 8,
@@ -138,6 +119,7 @@ function ResetPassword(){
               >Submit</Button>
           }
             </Box>
+          }
     </div>
     )
 }
