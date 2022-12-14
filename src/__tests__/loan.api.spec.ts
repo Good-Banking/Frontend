@@ -1,10 +1,11 @@
 import {
+  apiChangeStatus,
   apiCreateLoan,
   apiGetLoans,
   apiGetPendingLoans,
 } from '../remote/banking-api/loan.api';
-import bankingClient, {
-} from '../remote/banking-api/bankingClient';
+import bankingClient from '../remote/banking-api/bankingClient';
+import { LoanDetails } from '../models/LoanDetails';
 
 jest.mock('../remote/banking-api/bankingClient');
 const bankingClientMock = bankingClient as jest.Mocked<typeof bankingClient>;
@@ -104,6 +105,53 @@ describe('Loan api test suite', () => {
       balance: 123,
       creationDate: '2022-12-13T20:10:23.416Z',
       status: 'Pending',
+    });
+  });
+
+  it('Should change the status of a pending loan', async () => {
+    const loanDetails: LoanDetails = {
+      userId: 1,
+      loanID: 1,
+      reason: 'test reason',
+      initialAmount: 213,
+      balance: 123,
+      creationDate: '2022-12-13T20:10:23.416Z',
+      status: 'Pending',
+    };
+    (
+      bankingClientMock.put as jest.MockedFunction<typeof bankingClient.put>
+    ).mockResolvedValue({
+      status: 200,
+      data: {
+        userId: 1,
+        loanID: 1,
+        reason: 'test reason',
+        initialAmount: 213,
+        balance: 123,
+        creationDate: '2022-12-13T20:10:23.416Z',
+        status: 'Approved',
+      },
+      headers: { authorization: '123' },
+      withCredentials: true,
+    });
+
+    const result = await apiChangeStatus(loanDetails, '123');
+
+    expect(result.status).toBe(200);
+    expect(bankingClient.put).toHaveBeenCalledWith('/loans/pending-loans',
+    {...loanDetails},
+    {
+      headers: { 'authorization': '123' }, //check if this is an ADMIN type
+      withCredentials: true,
+    });
+    expect(result.payload).toStrictEqual({
+      userId: 1,
+      loanID: 1,
+      reason: 'test reason',
+      initialAmount: 213,
+      balance: 123,
+      creationDate: '2022-12-13T20:10:23.416Z',
+      status: 'Approved',
     });
   });
 });
