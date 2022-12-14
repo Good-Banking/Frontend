@@ -1,5 +1,6 @@
 import { Account } from "../models/Account";
-import { apiCreateAccount, apiGetAccounts } from "../remote/banking-api/account.api";
+import { Transaction } from "../models/Transaction";
+import { apiCreateAccount, apiGetAccounts, apiGetAllTransactions, apiGetTotalTransactionSize, apiGetTransactions } from "../remote/banking-api/account.api";
 import bankingClient from "../remote/banking-api/bankingClient";
 
 jest.mock('../remote/banking-api/bankingClient');
@@ -44,6 +45,48 @@ describe('Account test suite', () => {
         expect(result.status).toBe(200);
     })
 
-    
+    it('Get transactions should return an array of Transactions', async () => {
+        (bankingClientMock.get as jest.MockedFunction<typeof bankingClient.get>).mockResolvedValue({
+            data: {transactions: [] as Transaction[]},
+            status: 200
+        })
+        const token = 'token';
+        const id = 1;
+        const page = 2;
+        const result = await apiGetTransactions (id, token, page);
+        expect(bankingClient.get).toHaveBeenCalledWith(`/account/${id}/transaction/${page}`, {
+            headers: {'authorization': token},
+            withCredentials: true
+        })
+        expect(result.status).toBe(200);
+    })
+
+    it('Get all transactions should return an array of Transactions', async () => {
+        (bankingClientMock.get as jest.MockedFunction<typeof bankingClient.get>).mockResolvedValue({
+            data: {transactions: [] as Transaction[]},
+            status: 200
+        })
+        const token = 'token';
+        const id = 1;
+        
+        const result = await apiGetAllTransactions (id, token, );
+        expect(bankingClient.get).toHaveBeenCalledWith(`/account/${id}/transaction`, {
+            headers: {'authorization': token},
+            withCredentials: true
+        })
+        expect(result.status).toBe(200);
+    })
+
+    it('Get total transaction size should return the amount of transactons', async () => {
+        (bankingClientMock.get as jest.MockedFunction<typeof bankingClient.get>).mockResolvedValue({
+            data: {num: Number},
+            status: 200
+        })
+        const id = 1;
+        const result = await apiGetTotalTransactionSize (id);
+        expect(bankingClient.get).toHaveBeenCalledWith(`/account/${id}/transactions`,
+        {withCredentials: true});
+        expect(result.status).toBe(200);
+    })
 
 })
