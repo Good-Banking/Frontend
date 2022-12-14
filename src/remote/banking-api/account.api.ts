@@ -57,8 +57,6 @@ export const apiGetAllTransactions = async (
   return { status: response.status, headers: response.headers, payload: response.data };
 };
 
-
-
 export const apiGetTotalTransactionSize = async (id: number): Promise<BankingApiResponse> => {
   const response = await bankingClient.get<Transaction[]>(
     `${baseURL}/${id}/transactions`,
@@ -92,6 +90,5 @@ transfer: Transfer
   transfer,
   { withCredentials: true }
     );
-
     return { status: response.status, headers: response.headers, payload: response.data };
 };
