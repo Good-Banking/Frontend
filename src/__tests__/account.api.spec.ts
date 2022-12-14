@@ -1,5 +1,5 @@
 import { Account } from "../models/Account";
-import { apiCreateAccount } from "../remote/banking-api/account.api";
+import { apiCreateAccount, apiGetAccounts } from "../remote/banking-api/account.api";
 import bankingClient from "../remote/banking-api/bankingClient";
 
 jest.mock('../remote/banking-api/bankingClient');
@@ -27,6 +27,23 @@ describe('Account test suite', () => {
             headers: { 'authorization': '123' }
             });
         expect(result.status).toBe(200);
-});
+    });
+
+    it('Get accounts should return an array of Accounts', async () => {
+        (bankingClientMock.get as jest.MockedFunction<typeof bankingClient.get>).mockResolvedValue({
+            data: {accounts: [] as Account[]},
+            status: 200
+        });
+
+        const token = 'token';
+        const result = await apiGetAccounts (1, token);
+        expect(bankingClient.get).toHaveBeenCalledWith('/account/1', {
+            headers: { 'authorization': token},
+            withCredentials: true
+        })
+        expect(result.status).toBe(200);
+    })
+
+    
 
 })
