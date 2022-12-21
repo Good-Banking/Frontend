@@ -5,7 +5,7 @@ import TextField from '@mui/material/TextField';
 import { SyntheticEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import bankingClient from '../../remote/banking-api/bankingClient';
-
+// Unfinished component
 function ResetPassword() {
   const [submission, setSubmission] = useState<any>({
     email: '',

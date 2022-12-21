@@ -19,7 +19,7 @@ export const AppRoutes: React.FC<unknown> = () => (
     <Route path="/" element={<Home />} />
     <Route path="/login" element={<Login />} />
     <Route path="/register" element={<Register />} />
-    <Route path='/login/reset-password' element={<ResetPassword />} />
+    {/* <Route path='/login/reset-password' element={<ResetPassword />} /> */}
     <Route path="/details" element={
       <ProSidebarProvider>
         <AccountDetails />

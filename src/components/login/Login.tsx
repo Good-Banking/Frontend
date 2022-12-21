@@ -104,9 +104,9 @@ export default function Login() {
                   autoComplete="current-password"
                 />
                 {error === '' ? '' : <Alert severity="error">{error}</Alert>}
-                <Rlink className="loginlinks" to={'reset-password'}>
+                {/* <Rlink className="loginlinks" to={'reset-password'}>
                   Forgot password?
-                </Rlink>
+                </Rlink> */}
                 <Button
                   type="submit"
                   color="secondary"
